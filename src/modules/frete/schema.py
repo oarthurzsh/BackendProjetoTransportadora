@@ -8,6 +8,11 @@ class FreteBase(BaseModel):
 class FreteCreate(FreteBase):
     pass
 
+class FreteUpdate(BaseModel):
+    destino: str | None = Field(None, min_length=1)
+    peso: float | None = Field(None, gt=0)
+    transportadora: str | None = Field(None, min_length=1)
+
 class FreteResponse(FreteBase):
     id: int
 
