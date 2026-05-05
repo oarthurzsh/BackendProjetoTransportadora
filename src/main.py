@@ -5,6 +5,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from src.core.database import Base, engine
 from src.modules.frete.router import router as frete_router
+from src.modules.auth.router import router as auth_router
 
 # Ensure static directory exists
 os.makedirs("static", exist_ok=True)
@@ -20,6 +21,10 @@ app.add_middleware(
     allow_origins=[
         "http://localhost:5173",
         "http://127.0.0.1:5173",
+        "http://localhost:5173",
+        "http://127.0.0.1:5173",
+        "http://localhost:5174",
+        "http://127.0.0.1:5174",
         "http://localhost:3000",
         "http://127.0.0.1:3000",
     ],
@@ -32,10 +37,11 @@ app.add_middleware(
 
 # Include domain routers BEFORE static mount
 app.include_router(frete_router)
+app.include_router(auth_router)
 
 @app.get("/")
 def home():
-    return {"message": "TransCarga API is running", "version": "1.0.0"}
+    return {"message": "TransCarga API is Running", "version": "1.0.0"}
 
 # Static files mount AFTER routers (mounts can intercept middleware)
 app.mount("/static", StaticFiles(directory="static"), name="static")
