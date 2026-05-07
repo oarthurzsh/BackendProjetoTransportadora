@@ -3,7 +3,6 @@ from sqlalchemy.orm import DeclarativeBase, sessionmaker
 from src.core.config import settings
 import logging
 
-# Configuração de log básica
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
@@ -15,14 +14,13 @@ if not settings.database_url:
 
 logger.info(f"Conectando ao banco de dados: {settings.database_url}")
 
-# Argumentos extras para SQLite
 connect_args = {}
 if settings.database_url.startswith("sqlite"):
     connect_args = {"check_same_thread": False}
 
 engine = create_engine(
     settings.database_url,
-    echo=False,  # Reduz ruído de logs do SQLAlchemy
+    echo=False,
     pool_pre_ping=True,
     connect_args=connect_args
 )
