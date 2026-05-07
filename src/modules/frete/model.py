@@ -6,7 +6,7 @@ class Frete(Base):
     __tablename__ = "fretes"
 
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
-    destino = Column(String(255), nullable=True) # Mantido por compatibilidade
+    destino = Column(String(255), nullable=True)
     cep = Column(String(10), nullable=True)
     estado = Column(String(2), nullable=True)
     cidade = Column(String(100), nullable=True)

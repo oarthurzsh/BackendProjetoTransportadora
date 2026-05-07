@@ -7,15 +7,14 @@ from src.core.database import Base, engine
 from src.modules.frete.router import router as frete_router
 from src.modules.auth.router import router as auth_router
 
-# Ensure static directory exists
+
 os.makedirs("static", exist_ok=True)
 
-# Database table creation
+
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="TransCarga API")
 
-# Add CORS middleware — must be added before any routes/mounts
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
@@ -35,7 +34,6 @@ app.add_middleware(
     expose_headers=["*"],
 )
 
-# Include domain routers BEFORE static mount
 app.include_router(frete_router)
 app.include_router(auth_router)
 
@@ -43,6 +41,5 @@ app.include_router(auth_router)
 def home():
     return {"message": "TransCarga API is Running", "version": "1.0.0"}
 
-# Static files mount AFTER routers (mounts can intercept middleware)
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
